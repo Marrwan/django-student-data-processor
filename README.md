@@ -15,13 +15,15 @@ This system allows the university's student council to upload voter information 
 
 Ensure you have the following installed:
 - Python 3.x
-- Node.js
 - PostgreSQL
 - Redis (for Celery)
-- Docker (for deployment, optional)
 
 ### Backend Setup
 
+0. Clone the repository:
+   ```shell
+   git clone https://github.com/Marrwan/django-student-data-processor.git
+   ```
 1. Install dependencies:
     ```bash
     pip install -r requirements.txt
@@ -29,11 +31,13 @@ Ensure you have the following installed:
 
 2. Setup the database in `settings.py`:
     ```bash
-    DB_NAME=voting_system_db
+    DB_NAME=
     DB_USER=postgres
     DB_PASSWORD=your_password
     DB_HOST=localhost
     DB_PORT=5432
+   EMAIL_HOST_PASSWORD=""
+   EMAIL_HOST_USER=""
     ```
 
 3. Apply migrations:
@@ -51,21 +55,9 @@ Ensure you have the following installed:
     python manage.py runserver
     ```
 
-### Frontend Setup
-
-1. Install dependencies:
-    ```bash
-    npm install
-    ```
-
-2. Run the frontend:
-    ```bash
-    npm start
-    ```
-
 ### Running Tests
 
 To run unit tests for the backend, use:
 
 ```bash
-pytest
+pytest api/tests.py
