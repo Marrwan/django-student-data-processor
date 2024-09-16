@@ -1,4 +1,5 @@
 # tasks.py
+from zipfile import BadZipFile
 
 from celery import shared_task
 import pandas as pd
@@ -14,11 +15,24 @@ logger = logging.getLogger(__name__)
 @app.task
 def process_file(file_path):
     try:
+        logger.info(f"Processing file {file_path}")
         data = None
         if file_path.endswith('.csv'):
             data = pd.read_csv(file_path, header=0)
         elif file_path.endswith('.xlsx'):
-            data = pd.read_excel(file_path)
+            try:
+                # Specify engine explicitly, for example, openpyxl for .xlsx files
+                data = pd.read_excel(file_path, engine='openpyxl')
+            except BadZipFile:
+                error_message = f"Error processing file: File is not a valid Excel file (zip format issue)"
+                logger.error(error_message)
+                return {'error': error_message}
+            except ValueError as e:
+                error_message = f"Error processing file: {e}"
+                logger.error(error_message)
+                return {'error': error_message}
+        elif file_path.endswith('.xlsx'):
+            data = pd.read_excel(file_path, engine='xlrd')
 
         data.columns = data.columns.str.strip()
 

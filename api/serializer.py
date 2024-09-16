@@ -15,7 +15,7 @@ class FileUploadSerializer(serializers.Serializer):
         file_extension = value.name.split('.')[-1].lower()
 
 
-        if file_extension not in ['csv', 'xlsx']:
+        if file_extension not in ['csv', 'xlsx', 'xls']:
             raise serializers.ValidationError("Unsupported file type. Only CSV and Excel files are allowed.")
 
 
