@@ -19,7 +19,7 @@ from .utils import handle_file_upload
 class FileUploadView(APIView):
 
     def post(self, request, *args, **kwargs):
-        # Use the serializer to validate the file
+
         serializer = FileUploadSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -39,7 +39,7 @@ class FileUploadView(APIView):
 
 
 class StudentPagination(PageNumberPagination):
-    page_size = 10  # Adjust as needed
+    page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
 

@@ -21,7 +21,6 @@ def process_file(file_path):
             data = pd.read_csv(file_path, header=0)
         elif file_path.endswith('.xlsx'):
             try:
-                # Specify engine explicitly, for example, openpyxl for .xlsx files
                 data = pd.read_excel(file_path, engine='openpyxl')
             except BadZipFile:
                 error_message = f"Error processing file: File is not a valid Excel file (zip format issue)"
